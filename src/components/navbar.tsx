@@ -3,7 +3,13 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
+
+// Define props for NavLinks
+interface NavLinksProps {
+  mobile?: boolean;
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,7 +118,7 @@ const Navbar = () => {
   );
 };
 
-const NavLinks = ({ mobile = false, setIsOpen = () => {} }) => {
+const NavLinks = ({ mobile = false, setIsOpen }: NavLinksProps) => {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Projects", href: "#projects" },
@@ -126,7 +132,7 @@ const NavLinks = ({ mobile = false, setIsOpen = () => {} }) => {
         <Link
           key={item.name}
           href={item.href}
-          onClick={() => mobile && setIsOpen(false)}
+          onClick={() => mobile && setIsOpen?.(false)}
           className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
         >
           {item.name}
