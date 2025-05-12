@@ -29,7 +29,6 @@ const About = () => {
             <span className="text-[hsl(var(--accent))] mr-2">/</span> about me
           </h2>
         </motion.div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
