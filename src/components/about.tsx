@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import profileImg from "/images/profile.jpg";
 
 const About = () => {
   const skills = [
@@ -9,7 +10,6 @@ const About = () => {
     "TypeScript",
     "React",
     "Next.js",
-    ,
     "Tailwind CSS",
     "Python",
     "Java",
@@ -41,33 +41,16 @@ const About = () => {
           >
             <p className="text-lg mb-6">
               I am currently a{" "}
-              <span className="text-[hsl(var(--accent))]">
-                Computer Science student
-              </span>{" "}
-              at{" "}
-              <span className="text-[hsl(var(--accent))]">
-                MGM College of Engineering
-              </span>
-              , aspiring to become a skilled{" "}
-              <span className="text-[hsl(var(--accent))]">AI/ML Engineer</span>{" "}
-              and{" "}
-              <span className="text-[hsl(var(--accent))]">
-                Full-Stack Developer
-              </span>
-              . I’ve contributed to{" "}
-              <span className="text-[hsl(var(--accent))]">GDSC MGM</span> as a
-              core team member, leading technical initiatives like the{" "}
-              <span className="text-[hsl(var(--accent))]">
-                Language Fusion Challenge
-              </span>
-              . My work focuses on building smart, scalable, and real-world
-              software solutions that make a difference.
+              <span className="text-[hsl(var(--accent))]">Computer Science student</span> at{" "}
+              <span className="text-[hsl(var(--accent))]">MGM College of Engineering</span>, aspiring to become a skilled{" "}
+              <span className="text-[hsl(var(--accent))]">AI/ML Engineer</span> and{" "}
+              <span className="text-[hsl(var(--accent))]">Full-Stack Developer</span>. I’ve contributed to{" "}
+              <span className="text-[hsl(var(--accent))]">GDSC MGM</span> as a core team member, leading technical initiatives like the{" "}
+              <span className="text-[hsl(var(--accent))]">Language Fusion Challenge</span>. My work focuses on building smart, scalable, and real-world software solutions that make a difference.
             </p>
 
             <p className="text-muted-foreground mb-8">
-              My approach combines technical expertise with an eye for design,
-              allowing me to build solutions that are not only functional but
-              also aesthetically pleasing and user-friendly.
+              My approach combines technical expertise with an eye for design, allowing me to build solutions that are not only functional but also aesthetically pleasing and user-friendly.
             </p>
 
             <h4 className="text-xl font-medium mb-4">
@@ -92,10 +75,8 @@ const About = () => {
 
             <p className="text-muted-foreground">
               Outside of academics, I enjoy{" "}
-              <span className="text-[hsl(var(--accent))]">writing songs</span>,
-              exploring{" "}
-              <span className="text-[hsl(var(--accent))]">creative ideas</span>,
-              and expressing them through{" "}
+              <span className="text-[hsl(var(--accent))]">writing songs</span>, exploring{" "}
+              <span className="text-[hsl(var(--accent))]">creative ideas</span>, and expressing them through{" "}
               <span className="text-[hsl(var(--accent))]">code and music</span>.
             </p>
           </motion.div>
@@ -113,8 +94,9 @@ const About = () => {
             className="relative"
           >
             <div className="relative aspect-square max-w-md mx-auto md:mx-0 overflow-hidden rounded-lg border-2 border-accent/20 hover:border-accent/50 transition-all duration-300">
+              {/* Updated to use local image */}
               <Image
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+                src={profileImg}  // Update this to match your local image path
                 alt="Profile"
                 fill
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-500"

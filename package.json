@@ -42,8 +42,8 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/node": "^20.17.46",
+    "@types/react": "^18.3.21",
     "@types/react-dom": "^18",
     "postcss": "^8",
     "tailwind-merge": "^2",
