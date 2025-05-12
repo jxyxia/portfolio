@@ -21,14 +21,22 @@ const Hero = () => {
               <TypeAnimation
                 sequence={["Jayesh"]}
                 wrapper="span"
-                speed={50}
+                speed={10}
                 repeat={0}
                 cursor={false}
               />
             </span>
             <span className="px-1">&nbsp;</span>{" "}
             {/* <- real space between words */}
-            <span>here.</span>
+            <span>
+              <TypeAnimation
+                sequence={[550, "here."]}
+                wrapper="span"
+                speed={10}
+                repeat={0}
+                cursor={false}
+              />
+            </span>
             <span className="inline-block animate-blink">|</span>
           </span>
         </h1>
