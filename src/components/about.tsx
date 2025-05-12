@@ -97,8 +97,9 @@ const About = () => {
                 src={profileImg}  // Update this to match your local image path
                 alt="Profile"
                 fill
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                className="object-cover hover:grayscale-0 transition-all duration-500"
               />
+
               <div className="absolute inset-0 bg-accent/10 mix-blend-multiply hover:bg-transparent transition-colors duration-500" />
             </div>
             <div className="absolute -inset-2 border-2 border-accent/20 rounded-lg -z-10 translate-x-4 translate-y-4"></div>
