@@ -5,7 +5,16 @@ import { ExternalLink, Github, Folder } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const projects = [
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  github: string;
+  demo: string;
+};
+
+const projects: Project[] = [
   {
     title: "Portfolio Website",
     description:
@@ -68,7 +77,13 @@ const Projects = () => {
   );
 };
 
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
