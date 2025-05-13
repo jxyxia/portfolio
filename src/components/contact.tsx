@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
 
 
 const Contact = () => {
@@ -36,7 +37,14 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-semibold mb-6">Contact Form</h3>
-            <form className="space-y-4">
+            <form
+            className="space-y-4"
+            onSubmit={(e) => {
+            e.preventDefault(); // ✅ prevent page reload
+            // TODO: Add your backend call here (if not already present inside the button)
+            }}
+            >
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm mb-1">
@@ -81,9 +89,10 @@ const Contact = () => {
                   className="bg-secondary/20 border-border/50 focus:border-primary resize-none"
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Send Message
-              </Button>
+                <AnimatedSubscribeButton type="submit" className="w-full">
+                  <span>Send Message</span>
+                  <span>Sent</span>
+               </AnimatedSubscribeButton>
             </form>
           </motion.div>
 
