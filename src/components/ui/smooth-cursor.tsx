@@ -89,6 +89,16 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
+  // ⛔ Don't show cursor on touch devices
+  const [showCursor, setShowCursor] = useState(false);
+
+  useEffect(() => {
+    const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    setShowCursor(isDesktop);
+  }, []);
+
+  if (!showCursor) return null;
+
   const [isMoving, setIsMoving] = useState(false);
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });

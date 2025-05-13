@@ -71,14 +71,6 @@
     cursor: none;
   }
 
-  @media (hover: none) and (pointer: coarse) {
-    html,
-    body,
-    * {
-      cursor: auto !important;
-    }
-  }
-
   body {
     @apply bg-background text-foreground;
     font-family: "SF Pro Display", "SF Pro", "Helvetica Neue", Helvetica, Arial,
