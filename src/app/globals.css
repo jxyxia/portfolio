@@ -59,7 +59,7 @@
     --chart-5: 340 75% 55%;
     --accent-color: 163 79% 75%;
   }
-  
+
   }
   .theme {
     --animate-rippling: rippling var(--duration) ease-out;
@@ -69,11 +69,6 @@
 @layer base {
   * {
     @apply border-border;
-  }
-  html,
-  body,
-  * {
-    cursor: none;
   }
 
   body {
