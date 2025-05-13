@@ -89,17 +89,9 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }: SmoothCursorProps) {
-  // ⛔ Don't show cursor on touch devices
   const [showCursor, setShowCursor] = useState(false);
-
-  useEffect(() => {
-    const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    setShowCursor(isDesktop);
-  }, []);
-
-  if (!showCursor) return null;
-
   const [isMoving, setIsMoving] = useState(false);
+
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -119,7 +111,16 @@ export function SmoothCursor({
     damping: 35,
   });
 
+  // Set whether to show the cursor
   useEffect(() => {
+    const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    setShowCursor(isDesktop);
+  }, []);
+
+  // Main cursor tracking effect
+  useEffect(() => {
+    if (!showCursor) return;
+
     const updateVelocity = (currentPos: Position) => {
       const currentTime = Date.now();
       const deltaTime = currentTime - lastUpdateTime.current;
@@ -188,7 +189,10 @@ export function SmoothCursor({
       document.body.style.cursor = "auto";
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [cursorX, cursorY, rotation, scale]);
+  }, [showCursor, cursorX, cursorY, rotation, scale]);
+
+  // Render nothing if not showing cursor
+  if (!showCursor) return null;
 
   return (
     <motion.div
