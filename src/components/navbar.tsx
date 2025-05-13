@@ -15,7 +15,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full z-50 px-8 md:px-16 py-4 flex justify-between items-center bg-[#0a192f]">
+    <nav className="fixed w-full z-50 px-8 md:px-16 py-4 flex justify-between items-center bg-[#050d1a]">
       <div className="flex items-center space-x-8">
         <Link href="/" className="text-xl font-bold tracking-tighter">
           <motion.div
@@ -107,7 +107,7 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-16 left-0 right-0 bg-[#0a192f] border-b border-border py-4 px-8 md:hidden"
+          className="absolute top-16 left-0 right-0 bg-[#050d1a] border-b border-border py-4 px-8 md:hidden"
         >
           <div className="flex flex-col space-y-4">
             <NavLinks mobile setIsOpen={setIsOpen} />
