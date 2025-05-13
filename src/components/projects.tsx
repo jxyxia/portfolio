@@ -5,42 +5,38 @@ import { HoverEffect } from "./ui/card-hover-effect";
 
 const projects = [
   {
-    title: "Stripe",
+    title: "Pehenawa - Dress Rental Platform",
     description:
-      "A technology company that builds economic infrastructure for the internet.",
-    link: "https://stripe.com",
+      "A stylish and scalable dress rental web app for fashion lovers, built with a visually appealing frontend and efficient backend.",
+    link: "https://your-pehenawa-link.com",
   },
   {
-    title: "Netflix",
+    title: "Food Waste Analytics & Prediction System",
     description:
-      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more.",
-    link: "https://netflix.com",
+      "A data-driven system that analyzes and predicts food wastage patterns using machine learning and visual insights.",
+    link: "https://your-food-waste-project-link.com",
   },
   {
-    title: "Google",
+    title: "My Portfolio",
     description:
-      "A multinational technology company that specializes in Internet-related services and products.",
-    link: "https://google.com",
+      "A personal portfolio showcasing my skills, projects, and journey as a fullstack developer with a focus on clean UI and performance.",
+    link: "https://your-portfolio-link.com",
   },
   {
-    title: "Meta",
+    title: "SplitEase",
     description:
-      "A technology company that focuses on building products that advance Facebook's mission of bringing the world closer together.",
-    link: "https://meta.com",
+      "A smart expense and budget sharing app that helps groups manage shared expenses transparently and efficiently.",
+    link: "https://your-splitease-link.com",
   },
   {
-    title: "Amazon",
+    title: "C.A.R.E (Crisis Assistance and Response Engine)",
     description:
-      "A multinational technology company focusing on e-commerce, cloud computing, digital streaming, and AI.",
-    link: "https://amazon.com",
-  },
-  {
-    title: "Microsoft",
-    description:
-      "A multinational technology company that develops, licenses, and supports software, electronics, and services.",
-    link: "https://microsoft.com",
+      "A platform designed to offer assistance and coordination during crises using AI-driven decision support and fast response systems.",
+    link: "https://your-care-project-link.com",
   },
 ];
+
+
 
 const Projects = () => {
   return (
