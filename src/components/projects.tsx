@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { HoverEffect } from "./ui/card-hover-effect";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 
 const projects = [
   {
@@ -66,5 +67,6 @@ const Projects = () => {
     </section>
   );
 };
+<SmoothCursor />
 
 export default Projects;

@@ -65,6 +65,12 @@
   * {
     @apply border-border;
   }
+  html,
+  body,
+  * {
+    cursor: none;
+  }
+  
   body {
     @apply bg-background text-foreground;
     font-family: "SF Pro Display", "SF Pro", "Helvetica Neue", Helvetica, Arial,
