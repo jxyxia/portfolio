@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { RippleButton } from "@/components/magicui/ripple-button";
+
 
 const Contact = () => {
   return (
@@ -81,9 +81,9 @@ const Contact = () => {
                   className="bg-secondary/20 border-border/50 focus:border-primary resize-none"
                 />
               </div>
-              <RippleButton type="submit" className="w-full">
+              <Button type="submit" className="w-full">
                 Send Message
-              </RippleButton>
+              </Button>
             </form>
           </motion.div>
 
