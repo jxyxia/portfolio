@@ -1,49 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Folder } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { HoverEffect } from "./ui/card-hover-effect";
 
-type Project = {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  github: string;
-  demo: string;
-};
-
-const projects: Project[] = [
+const projects = [
   {
-    title: "Portfolio Website",
+    title: "Stripe",
     description:
-      "A minimalist portfolio website built with Next.js and Tailwind CSS, featuring a dark theme and Apple-inspired design language.",
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    github: "https://github.com/username/portfolio",
-    demo: "#",
+      "A technology company that builds economic infrastructure for the internet.",
+    link: "https://stripe.com",
   },
   {
-    title: "E-Commerce Platform",
+    title: "Netflix",
     description:
-      "A modern e-commerce platform with a sleek user interface, product filtering, and secure checkout process.",
-    image:
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
-    tags: ["React", "Node.js", "Stripe"],
-    github: "https://github.com/username/ecommerce",
-    demo: "#",
+      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more.",
+    link: "https://netflix.com",
   },
   {
-    title: "Task Management App",
+    title: "Google",
     description:
-      "A productivity application for managing tasks, projects, and deadlines with a clean, intuitive interface.",
-    image:
-      "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
-    tags: ["React", "Firebase", "Tailwind CSS"],
-    github: "https://github.com/username/task-manager",
-    demo: "#",
+      "A multinational technology company that specializes in Internet-related services and products.",
+    link: "https://google.com",
+  },
+  {
+    title: "Meta",
+    description:
+      "A technology company that focuses on building products that advance Facebook's mission of bringing the world closer together.",
+    link: "https://meta.com",
+  },
+  {
+    title: "Amazon",
+    description:
+      "A multinational technology company focusing on e-commerce, cloud computing, digital streaming, and AI.",
+    link: "https://amazon.com",
+  },
+  {
+    title: "Microsoft",
+    description:
+      "A multinational technology company that develops, licenses, and supports software, electronics, and services.",
+    link: "https://microsoft.com",
   },
 ];
 
@@ -62,88 +57,17 @@ const Projects = () => {
             <span className="text-[hsl(var(--accent))] mr-2">/</span> projects
           </h2>
           <p className="text-muted-foreground max-w-2xl">
-            A selection of my recent work, showcasing my skills in design and
-            development.
+            A selection of my favorite companies and their innovations across
+            tech and business domains.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
-          ))}
+        {/* HoverEffect component integration */}
+        <div className="w-full">
+          <HoverEffect items={projects} />
         </div>
       </div>
     </section>
-  );
-};
-
-const ProjectCard = ({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -10 }}
-      className="bg-card rounded-lg overflow-hidden border border-border/50 hover:border-accent/50 transition-all duration-300 group shadow-lg hover:shadow-xl"
-    >
-      <div className="p-1 bg-secondary/30">
-        <div className="flex justify-between items-center px-4 py-3">
-          <Folder className="text-accent" size={24} />
-          <div className="flex gap-4">
-            <Link
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-accent transition-colors"
-            >
-              <Github size={20} />
-            </Link>
-            <Link
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-accent transition-colors"
-            >
-              <ExternalLink size={20} />
-            </Link>
-          </div>
-        </div>
-      </div>
-      <div className="relative h-48 overflow-hidden">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      </div>
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
-          {project.title}
-        </h3>
-        <p className="text-muted-foreground text-sm mb-4">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
   );
 };
 

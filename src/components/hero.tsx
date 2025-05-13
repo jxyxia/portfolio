@@ -29,8 +29,7 @@ const Hero = () => {
                 cursor={false}
               />
             </span>
-            <span className="px-1">&nbsp;</span>{" "}
-            {/* <- real space between words */}
+            <span className="px-1">&nbsp;</span>
             <span>
               <TypeAnimation
                 sequence={[550, "here."]}
@@ -44,11 +43,20 @@ const Hero = () => {
           </span>
         </h1>
 
-        
         <div className="text-xl mt-7 text-neutral-600 dark:text-neutral-400">
-          Learning and building <FlipWords words={words} /> projects every day.
+          Learning and building<FlipWords words={words} />projects every day.
         </div>
+
       </motion.div>
+
+      
+      <Link
+        href="#projects"
+        className="absolute bottom-10 flex flex-col items-center text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <span className="text-sm mb-2">Scroll Down</span>
+        <ArrowDown className="animate-bounce" size={20} />
+      </Link>
     </section>
   );
 };

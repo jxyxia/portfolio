@@ -102,7 +102,6 @@ const About = () => {
 
               <div className="absolute inset-0 bg-accent/10 mix-blend-multiply hover:bg-transparent transition-colors duration-500" />
             </div>
-            <div className="absolute -inset-2 border-2 border-accent/20 rounded-lg -z-10 translate-x-4 translate-y-4"></div>
           </motion.div>
         </div>
       </div>
