@@ -8,8 +8,12 @@ import "./globals.css";
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export const metadata: Metadata = {
-  title: "Jay",
+  title: "Jayesh Wakode",
   description: "Personal portfolio website with Apple-inspired design",
+  icons: {
+    icon: "/images/tree.png",
+    shortcut:"/images/tree(Shortcut).png",
+  }
 };
 
 export const viewport = {
