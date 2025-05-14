@@ -3,16 +3,47 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
-
+import { supabase } from "@/lib/supabaseClient";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const { error } = await supabase.from("contacts").insert([formData]);
+    setLoading(false);
+
+    if (error) {
+      alert("Error sending message: " + error.message);
+    } else {
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    }
+  };
+
   return (
     <section id="contact" className="py-20 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -29,7 +60,9 @@ const Contact = () => {
           </p>
         </motion.div>
 
+        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -37,14 +70,7 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-semibold mb-6">Contact Form</h3>
-            <form
-            className="space-y-4"
-            onSubmit={(e) => {
-            e.preventDefault(); // ✅ prevent page reload
-            // TODO: Add your backend call here (if not already present inside the button)
-            }}
-            >
-
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm mb-1">
@@ -54,6 +80,9 @@ const Contact = () => {
                     id="name"
                     placeholder="Your name"
                     className="bg-secondary/20 border-border/50 focus:border-primary"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
                 <div>
@@ -65,6 +94,9 @@ const Contact = () => {
                     type="email"
                     placeholder="Your email"
                     className="bg-secondary/20 border-border/50 focus:border-primary"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
               </div>
@@ -76,6 +108,9 @@ const Contact = () => {
                   id="subject"
                   placeholder="Subject"
                   className="bg-secondary/20 border-border/50 focus:border-primary"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
                 />
               </div>
               <div>
@@ -87,15 +122,23 @@ const Contact = () => {
                   placeholder="Your message"
                   rows={5}
                   className="bg-secondary/20 border-border/50 focus:border-primary resize-none"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                 />
               </div>
-                <AnimatedSubscribeButton type="submit" className="w-full">
-                  <span>Send Message</span>
-                  <span>Sent</span>
-               </AnimatedSubscribeButton>
+              <AnimatedSubscribeButton
+                type="submit"
+                className="w-full"
+                disabled={loading}
+              >
+                <span>{loading ? "Sending..." : "Send Message"}</span>
+                <span>Sent</span>
+              </AnimatedSubscribeButton>
             </form>
           </motion.div>
 
+          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -113,7 +156,7 @@ const Contact = () => {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <Mail className="text-muted-foreground" size={20} />
+                  <Mail size={20} className="text-muted-foreground" />
                   <a
                     href="mailto:jayesh.workarchive@gmail.com"
                     className="text-muted-foreground hover:text-foreground transition-colors"
@@ -122,7 +165,7 @@ const Contact = () => {
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <Linkedin className="text-muted-foreground" size={20} />
+                  <Linkedin size={20} className="text-muted-foreground" />
                   <a
                     href="https://linkedin.com/in/jayesh0735"
                     target="_blank"
@@ -133,7 +176,7 @@ const Contact = () => {
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <Github className="text-muted-foreground" size={20} />
+                  <Github size={20} className="text-muted-foreground" />
                   <a
                     href="https://github.com/jxyxia"
                     target="_blank"
@@ -144,7 +187,7 @@ const Contact = () => {
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <Twitter className="text-muted-foreground" size={20} />
+                  <Twitter size={20} className="text-muted-foreground" />
                   <a
                     href="https://twitter.com/"
                     target="_blank"
@@ -157,6 +200,7 @@ const Contact = () => {
               </div>
             </div>
 
+            {/* Social Icons */}
             <div className="mt-12 pt-8 border-t border-border/50">
               <h4 className="text-lg font-medium mb-4">Let's Connect</h4>
               <div className="flex gap-4">
