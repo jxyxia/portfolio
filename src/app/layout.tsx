@@ -9,11 +9,7 @@ const outfit = Outfit({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export const metadata: Metadata = {
   title: "Jayesh Wakode",
-  description: "Personal portfolio website with Apple-inspired design",
-  icons: {
-    icon: "/images/tree.png",
-    shortcut:"/images/tree(Shortcut).png",
-  }
+  description: "Personal portfolio website",
 };
 
 export const viewport = {
