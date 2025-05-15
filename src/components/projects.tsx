@@ -36,8 +36,6 @@ const projects = [
   },
 ];
 
-
-
 const Projects = () => {
   return (
     <section id="projects" className="py-20 px-4 md:px-8 bg-background">
@@ -50,11 +48,10 @@ const Projects = () => {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4 flex items-center">
-            <span className="text-[hsl(var(--accent))] mr-2">/</span> projects
+            <span className="text-[hsl(var(--accent))] mr-2">/</span> Projects
           </h2>
           <p className="text-muted-foreground max-w-2xl">
-            A selection of my favorite companies and their innovations across
-            tech and business domains.
+            Some of the projects that I have built and contributed in.
           </p>
         </motion.div>
 
