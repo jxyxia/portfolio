@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
-import { supabase, ContactSubmission } from "@/lib/supabase";
+import { getSupabase, ContactSubmission } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast"; // Add toast if you have it
 
 interface FormState {
@@ -28,7 +28,8 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
+  // If you have toast component
+  // const { toast } = useToast();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,6 +58,12 @@ const Contact = () => {
         throw new Error("Please enter a valid email address");
       }
 
+      // Get Supabase client (only created when needed)
+      const supabase = getSupabase();
+      if (!supabase) {
+        throw new Error("Could not connect to the database");
+      }
+
       // Submit to Supabase
       const { data, error: supabaseError } = await supabase
         .from("contact_submissions")
@@ -76,10 +83,10 @@ const Contact = () => {
       setFormData({ name: "", email: "", subject: "", message: "" });
 
       // If you have toast component
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
+      // toast({
+      //   title: "Message sent!",
+      //   description: "Thank you for your message. I'll get back to you soon.",
+      // });
 
       // Reset submission state after a delay
       setTimeout(() => {
@@ -91,12 +98,11 @@ const Contact = () => {
       );
 
       // If you have toast component
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description:
-          err instanceof Error ? err.message : "An unknown error occurred",
-      });
+      // toast({
+      //   variant: "destructive",
+      //   title: "Error",
+      //   description: err instanceof Error ? err.message : "An unknown error occurred",
+      // });
     } finally {
       setIsSubmitting(false);
     }
