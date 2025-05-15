@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === "production";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export", // Static export mode
@@ -5,8 +7,8 @@ const nextConfig = {
     unoptimized: true, // ✅ Disable image optimization for static export
     domains: ["images.unsplash.com"], // If you're using images from Unsplash
   },
-  basePath: "/portfolio",
-  assetPrefix: "/portfolio",
+  basePath: isProd ? "/portfolio" : "",
+  assetPrefix: isProd ? "/portfolio" : "",
 };
 
 if (process.env.NEXT_PUBLIC_TEMPO) {
