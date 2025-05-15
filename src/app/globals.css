@@ -33,7 +33,7 @@
   }
 
   :root {
-    --background: 215 55% 6%; /* #0a0a0d */
+    --background: 215 55% 6%; /* #050d1a */
     --foreground: 0 0% 98%;
     --card: 217 64% 16%; /* #112240 */
     --card-foreground: 0 0% 98%;
@@ -59,12 +59,10 @@
     --chart-5: 340 75% 55%;
     --accent-color: 163 79% 75%;
   }
-
-  }
-  .theme {
-    --animate-rippling: rippling var(--duration) ease-out;
-  }
-
+}
+.theme {
+  --animate-rippling: rippling var(--duration) ease-out;
+}
 
 @layer base {
   * {
@@ -73,8 +71,8 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "SF Pro Display", "SF Pro", "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
+    font-family:
+      "SF Pro Display", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   /* Smooth scrolling */
@@ -117,12 +115,12 @@
 
 @theme inline {
   @keyframes rippling {
-  0% {
-    opacity: 1;
+    0% {
+      opacity: 1;
     }
-  100% {
-    transform: scale(2);
-    opacity: 0;
+    100% {
+      transform: scale(2);
+      opacity: 0;
     }
   }
 }
