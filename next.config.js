@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Static export mode
+  output: "export", // Static export mode
   images: {
     unoptimized: true, // ✅ Disable image optimization for static export
-    domains: ['images.unsplash.com'], // If you're using images from Unsplash
+    domains: ["images.unsplash.com"], // If you're using images from Unsplash
   },
 };
 
