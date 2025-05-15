@@ -5,6 +5,8 @@ const nextConfig = {
     unoptimized: true, // ✅ Disable image optimization for static export
     domains: ["images.unsplash.com"], // If you're using images from Unsplash
   },
+  basePath: "/portfolio",
+  assetPrefix: "/portfolio",
 };
 
 if (process.env.NEXT_PUBLIC_TEMPO) {
