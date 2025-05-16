@@ -8,8 +8,6 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
-import { getSupabase, ContactSubmission } from "@/lib/supabase";
-import { useToast } from "@/components/ui/use-toast"; // Add toast if you have it
 
 interface FormState {
   name: string;
@@ -18,6 +16,37 @@ interface FormState {
   message: string;
 }
 
+const socialLinks = [
+  {
+    name: "Email",
+    href: "mailto:jayesh.workarchive@gmail.com",
+    icon: Mail,
+    ariaLabel: "Send email to Jayesh",
+    isExternal: false,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com/in/jayesh0735",
+    icon: Linkedin,
+    ariaLabel: "Visit Jayesh LinkedIn profile",
+    isExternal: true,
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/jxyxia",
+    icon: Github,
+    ariaLabel: "Visit Jayesh GitHub profile",
+    isExternal: true,
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com/your_twitter_handle", // Replace with your actual Twitter handle
+    icon: Twitter,
+    ariaLabel: "Visit Jayesh Twitter profile",
+    isExternal: true,
+  },
+];
+
 const Contact = () => {
   const [formData, setFormData] = useState<FormState>({
     name: "",
@@ -25,11 +54,9 @@ const Contact = () => {
     subject: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  // If you have toast component
-  // const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+  const [messageColor, setMessageColor] = useState("green");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,65 +71,51 @@ const Contact = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError(null);
+    setResponseMessage("");
+
+    if (!formData.name || !formData.email || !formData.message) {
+      setResponseMessage("❌ Please fill in all required fields.");
+      setMessageColor("red");
+      setIsSubmitting(false);
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setResponseMessage("❌ Please enter a valid email address.");
+      setMessageColor("red");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      // Validate form data
-      if (!formData.name || !formData.email || !formData.message) {
-        throw new Error("Please fill in all required fields");
+      const formPayload = new FormData();
+      formPayload.append("name", formData.name);
+      formPayload.append("email", formData.email);
+      formPayload.append("subject", formData.subject);
+      formPayload.append("message", formData.message);
+
+      const response = await fetch("https://formspree.io/f/xeognenj", {
+        method: "POST",
+        body: formPayload,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setResponseMessage("✅ Your message has been sent!");
+        setMessageColor("green");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        const data = await response.json();
+        setResponseMessage(
+          data?.errors?.[0]?.message || "❌ Submission failed."
+        );
+        setMessageColor("red");
       }
-
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        throw new Error("Please enter a valid email address");
-      }
-
-      // Get Supabase client (only created when needed)
-      const supabase = getSupabase();
-      if (!supabase) {
-        throw new Error("Could not connect to the database");
-      }
-
-      // Submit to Supabase
-      const { data, error: supabaseError } = await supabase
-        .from("contact_submissions")
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            subject: formData.subject,
-            message: formData.message,
-          } as ContactSubmission,
-        ]);
-
-      if (supabaseError) throw supabaseError;
-
-      // Success
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-
-      // If you have toast component
-      // toast({
-      //   title: "Message sent!",
-      //   description: "Thank you for your message. I'll get back to you soon.",
-      // });
-
-      // Reset submission state after a delay
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "An unknown error occurred"
-      );
-
-      // If you have toast component
-      // toast({
-      //   variant: "destructive",
-      //   title: "Error",
-      //   description: err instanceof Error ? err.message : "An unknown error occurred",
-      // });
+    } catch (error) {
+      setResponseMessage("❌ Network error. Try again later.");
+      setMessageColor("red");
     } finally {
       setIsSubmitting(false);
     }
@@ -128,6 +141,7 @@ const Contact = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Contact Form Left */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -135,72 +149,91 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-semibold mb-6">Contact Form</h3>
-            {error && (
-              <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-md">
-                {error}
+
+            {responseMessage && (
+              <div
+                className={`mb-4 p-3 rounded-md ${
+                  messageColor === "green"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                {responseMessage}
               </div>
             )}
+
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm mb-1">
-                    Name
+                    Name *
                   </label>
                   <Input
                     id="name"
+                    name="name"
                     placeholder="Your name"
                     className="bg-secondary/20 border-border/50 focus:border-primary"
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm mb-1">
-                    Email
+                    Email *
                   </label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="Your email"
                     className="bg-secondary/20 border-border/50 focus:border-primary"
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
+
               <div>
                 <label htmlFor="subject" className="block text-sm mb-1">
                   Subject
                 </label>
                 <Input
                   id="subject"
+                  name="subject"
                   placeholder="Subject"
                   className="bg-secondary/20 border-border/50 focus:border-primary"
                   value={formData.subject}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
+
               <div>
                 <label htmlFor="message" className="block text-sm mb-1">
-                  Message
+                  Message *
                 </label>
                 <Textarea
                   id="message"
+                  name="message"
                   placeholder="Your message"
                   rows={5}
                   className="bg-secondary/20 border-border/50 focus:border-primary resize-none"
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
+
               <AnimatedSubscribeButton
                 type="submit"
                 className="w-full"
+                data-state={isSubmitting ? "loading" : "idle"}
                 disabled={isSubmitting}
-                data-state={isSubmitted ? "subscribed" : "idle"}
               >
                 <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
                 <span>Sent</span>
@@ -208,102 +241,59 @@ const Contact = () => {
             </form>
           </motion.div>
 
+          {/* Social Connect Right */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-col justify-between"
+            className="flex flex-col justify-center"
           >
-            <div>
-              <h3 className="text-2xl font-semibold mb-6">Connect With Me</h3>
-              <p className="text-muted-foreground mb-8">
-                I'm always open to discussing new projects, creative ideas, or
-                opportunities to be part of your vision. Feel free to reach out
-                through any of the platforms below.
-              </p>
+            <h3 className="text-2xl font-semibold mb-6">Connect With Me</h3>
+            <p className="text-muted-foreground mb-8">
+              I'm always open to discussing new projects, creative ideas, or
+              opportunities to be part of your vision. Feel free to reach out
+              through any of the platforms below.
+            </p>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <Mail className="text-muted-foreground" size={20} />
-                  <a
-                    href="mailto:jayesh.workarchive@gmail.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    jayesh.workarchive@gmail.com
-                  </a>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Linkedin className="text-muted-foreground" size={20} />
-                  <a
-                    href="https://linkedin.com/in/jayesh0735"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    linkedin.com/in/jayesh0735
-                  </a>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Github className="text-muted-foreground" size={20} />
-                  <a
-                    href="https://github.com/jxyxia"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    github.com/jxyxia
-                  </a>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Twitter className="text-muted-foreground" size={20} />
-                  <a
-                    href="https://twitter.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    twitter.com/
-                  </a>
-                </div>
-              </div>
+            <div className="space-y-6 mb-12">
+              {socialLinks.map(
+                ({ name, href, icon: Icon, ariaLabel, isExternal }) => (
+                  <div key={name} className="flex items-center gap-4">
+                    <Icon className="text-muted-foreground" size={24} />
+                    <a
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      className="text-muted-foreground hover:text-foreground transition-colors break-all"
+                      aria-label={ariaLabel}
+                    >
+                      {name === "Email"
+                        ? "jayesh.workarchive@gmail.com"
+                        : href.replace(/^https?:\/\//, "")}
+                    </a>
+                  </div>
+                )
+              )}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-border/50">
+            <div>
               <h4 className="text-lg font-medium mb-4">Let's Connect</h4>
               <div className="flex gap-4">
-                <Link
-                  href="https://github.com/jxyxia"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-secondary/50 hover:bg-secondary p-3 rounded-full transition-colors"
-                >
-                  <Github size={20} />
-                </Link>
-                <Link
-                  href="https://linkedin.com/in/jayesh0735"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-secondary/50 hover:bg-secondary p-3 rounded-full transition-colors"
-                >
-                  <Linkedin size={20} />
-                </Link>
-                <Link
-                  href="https://twitter.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-secondary/50 hover:bg-secondary p-3 rounded-full transition-colors"
-                >
-                  <Twitter size={20} />
-                </Link>
-                <Link
-                  href="mailto:jayesh.workarchive@gmail.com"
-                  className="bg-secondary/50 hover:bg-secondary p-3 rounded-full transition-colors"
-                >
-                  <Mail size={20} />
-                </Link>
+                {socialLinks.map(
+                  ({ name, href, icon: Icon, ariaLabel, isExternal }) => (
+                    <Link
+                      key={name}
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      className="bg-secondary/50 hover:bg-secondary p-3 rounded-full transition-colors"
+                      aria-label={ariaLabel}
+                    >
+                      <Icon size={20} />
+                    </Link>
+                  )
+                )}
               </div>
             </div>
           </motion.div>
