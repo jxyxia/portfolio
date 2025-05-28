@@ -40,7 +40,7 @@ const socialLinks = [
   },
   {
     name: "Twitter",
-    href: "https://twitter.com/your_twitter_handle", // Replace with your actual Twitter handle
+    href: "https://twitter.com/jxycli", // Replace with your actual Twitter handle
     icon: Twitter,
     ariaLabel: "Visit Jayesh Twitter profile",
     isExternal: true,
