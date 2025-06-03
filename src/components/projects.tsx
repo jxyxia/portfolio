@@ -8,7 +8,7 @@ const projects = [
     title: "Pehenawa - Dress Rental Platform",
     description:
       "A stylish and scalable dress rental web app for fashion lovers, built with a visually appealing frontend and efficient backend.",
-    link: "https://your-pehenawa-link.com",
+    link: "https://github.com/jxyxia/Pehnawa",
   },
   {
     title: "Food Waste Analytics & Prediction System",

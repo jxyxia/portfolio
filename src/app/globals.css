@@ -59,6 +59,9 @@
     --chart-5: 340 75% 55%;
     --accent-color: 163 79% 75%;
   }
+  .theme {
+    --animate-meteor: meteor 5s linear infinite;
+  }
 }
 .theme {
   --animate-rippling: rippling var(--duration) ease-out;
@@ -121,6 +124,19 @@
     100% {
       transform: scale(2);
       opacity: 0;
+    }
+  }
+  @keyframes meteor {
+  0% {
+    transform: rotate(var(--angle)) translateX(0);
+    opacity: 1;
+    }
+  70% {
+    opacity: 1;
+    }
+  100% {
+    transform: rotate(var(--angle)) translateX(-500px);
+    opacity: 0;
     }
   }
 }
