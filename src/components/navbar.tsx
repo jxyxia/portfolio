@@ -57,7 +57,7 @@ const Navbar = () => {
           </motion.div>
         </Link>
         <Link
-          href="https://linkedin.com/jayesh0735"
+          href="https://linkedin.com/in/jayesh0735"
           target="_blank"
           className="text-muted-foreground hover:text-accent transition-colors"
         >
